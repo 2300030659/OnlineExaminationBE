@@ -1,3 +1,4 @@
+// UserService.java
 package com.onlineexam.online_exam_backend.service;
 
 import com.onlineexam.online_exam_backend.model.User;
@@ -19,6 +20,12 @@ public class UserService {
         if (repo.findByEmail(user.getEmail()).isPresent()) {
             return "Email already exists";
         }
+
+        // Set role (Admin if provided, else Student)
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("STUDENT");
+        }
+
         user.setPassword(encoder.encode(user.getPassword()));
         repo.save(user);
         return "Signup successful";

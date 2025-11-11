@@ -1,3 +1,4 @@
+// UserController.java
 package com.onlineexam.online_exam_backend.controller;
 
 import com.onlineexam.online_exam_backend.model.User;
@@ -9,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:5173") // allow frontend access
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     @Autowired
@@ -32,7 +33,12 @@ public class UserController {
         return userService.login(email, password)
                 .map(user -> ResponseEntity.ok(Map.of(
                         "msg", "Login successful",
-                        "user", Map.of("id", user.getId(), "name", user.getName(), "email", user.getEmail())
+                        "user", Map.of(
+                                "id", user.getId(),
+                                "name", user.getName(),
+                                "email", user.getEmail(),
+                                "role", user.getRole()
+                        )
                 )))
                 .orElseGet(() -> ResponseEntity.status(401).body(Map.of("msg", "Invalid email or password")));
     }

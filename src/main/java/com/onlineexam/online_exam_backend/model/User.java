@@ -1,3 +1,4 @@
+// User.java
 package com.onlineexam.online_exam_backend.model;
 
 import jakarta.persistence.*;
@@ -5,7 +6,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -14,6 +16,9 @@ public class User {
     private String email;
 
     private String password; // stored hashed
+
+    @Column(nullable = false)
+    private String role = "STUDENT"; // Default role
 
     // getters & setters
     public Long getId() { return id; }
@@ -24,4 +29,6 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 }

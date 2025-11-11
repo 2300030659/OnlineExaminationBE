@@ -1,3 +1,4 @@
+// UserRepository.java
 package com.onlineexam.online_exam_backend.repository;
 
 import com.onlineexam.online_exam_backend.model.User;
