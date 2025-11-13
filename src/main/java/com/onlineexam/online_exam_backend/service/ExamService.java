@@ -1,46 +1,43 @@
 package com.onlineexam.online_exam_backend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Optional;
-
 import com.onlineexam.online_exam_backend.model.Exam;
 import com.onlineexam.online_exam_backend.repository.ExamRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExamService {
 
-    @Autowired
-    private ExamRepository examRepo;
+    private final ExamRepository examRepository;
+
+    public ExamService(ExamRepository examRepository) {
+        this.examRepository = examRepository;
+    }
 
     public Exam createExam(Exam exam) {
-        return examRepo.save(exam);
+        return examRepository.save(exam);
     }
 
     public List<Exam> getAllExams() {
-        return examRepo.findAll();
+        return examRepository.findAll();
     }
 
-    public Optional<Exam> getExamById(Long id) {
-        return examRepo.findById(id);
-    }
-
-    public Exam updateExam(Long id, Exam updatedExam) {
-        return examRepo.findById(id)
-                .map(exam -> {
-                    exam.setTitle(updatedExam.getTitle());
-                    exam.setDescription(updatedExam.getDescription());
-                    exam.setDuration(updatedExam.getDuration());
-                    exam.setPassMarks(updatedExam.getPassMarks());
-                    exam.setStartTime(updatedExam.getStartTime());
-                    exam.setEndTime(updatedExam.getEndTime());
-                    return examRepo.save(exam);
-                })
-                .orElseThrow(() -> new RuntimeException("Exam not found"));
+    public Exam updateExam(Long id, Exam examDetails) {
+        Optional<Exam> optionalExam = examRepository.findById(id);
+        if (!optionalExam.isPresent()) {
+            throw new RuntimeException("Exam not found with id " + id);
+        }
+        Exam exam = optionalExam.get();
+        exam.setTitle(examDetails.getTitle());
+        exam.setDuration(examDetails.getDuration());
+        exam.setPassMarks(examDetails.getPassMarks());
+        exam.setDescription(examDetails.getDescription());
+        return examRepository.save(exam);
     }
 
     public void deleteExam(Long id) {
-        examRepo.deleteById(id);
+        examRepository.deleteById(id);
     }
 }

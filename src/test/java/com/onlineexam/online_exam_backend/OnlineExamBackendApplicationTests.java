@@ -9,5 +9,4 @@ class OnlineExamBackendApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
