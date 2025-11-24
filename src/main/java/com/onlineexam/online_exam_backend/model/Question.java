@@ -16,16 +16,15 @@ public class Question {
     private String questionText;
 
     @Enumerated(EnumType.STRING)
-    private QuestionType questionType; // MCQ or ESSAY
+    private QuestionType questionType; 
 
     @Column(columnDefinition = "TEXT")
-    private String options; // JSON string for MCQ options
+    private String options; 
 
-    private String correctAnswer; // for MCQ
+    private String correctAnswer;
 
     private int marks;
 
-    // Constructors
     public Question() {}
 
     public Question(Exam exam, String questionText, QuestionType questionType, String options, String correctAnswer, int marks) {
@@ -37,7 +36,6 @@ public class Question {
         this.marks = marks;
     }
 
-    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
